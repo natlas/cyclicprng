@@ -1,5 +1,14 @@
 # CyclicPRNG
 
+![Last Commit](https://img.shields.io/github/last-commit/natlas/cyclicprng.svg)
+[![Release](https://img.shields.io/github/release/natlas/cyclicprng.svg)](https://github.com/natlas/cyclicprng/releases/latest)
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg?style=flat)](LICENSE)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/c8229ff5c7e03a5cec59/maintainability)](https://codeclimate.com/github/natlas/cyclicprng/maintainability)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/natlas/cyclicprng.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/natlas/cyclicprng/alerts/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 A cyclical PRNG implementation that can provably generate every number in the cycle exactly once before restarting. For more information on why this was built and how it works, see the corresponding [natlas documentation](https://github.com/natlas/natlas/wiki/Host-Coverage-Scanning-Strategy).
 
 ## Mathematical Background
