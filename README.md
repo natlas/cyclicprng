@@ -69,6 +69,14 @@ restart
 
 You may notice that the `restart` event triggers before the last value is returned. This happens because the cycle automatically restarts when it reaches the final value in the cycle, right before that value is returned to the caller.
 
+### Edge Cases
+
+The following edge cases exist for CyclicPRNG:
+
+* `size < 1` -> Raise ValueError
+* `size = 1` -> Always return 1
+* `size = 2` -> The generator is always 2 (equivalent to consistent=true)
+
 ## Performance
 
 I've included these performance numbers based on tests on my development desktop. As such, they may not be indicative of performance on your machine.
