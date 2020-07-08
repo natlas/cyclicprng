@@ -49,7 +49,10 @@ assert first_cycle == second_cycle
 
 CyclicPRNG allows you to register event handlers to receive messages when the PRNG restarts. Optionally, an event handler could be provided at initialization to also receive an `init` event.
 
-The two events emitted by CyclicPRNG are: `init` and `restart`.
+The two events emitted by CyclicPRNG are:
+
+* `init`
+* `restart`
 
 ```python
 >>> from cyclicprng import CyclicPRNG
