@@ -40,7 +40,7 @@ class CyclicPRNG:
     cycle_start_time = None
     completed_cycle_count = 0
     consistent = False
-    notify = []
+    
 
     def __init__(
         self, cycle_size: int, consistent: bool = False, event_handler: callable = None
@@ -48,6 +48,7 @@ class CyclicPRNG:
         """
             Initialize PRNG that restarts after cycle_size calls
         """
+        self.notify = []
         self.size = cycle_size
         if self.size < 1:
             raise ValueError(
