@@ -1,0 +1,34 @@
+name: Publish to PyPI
+
+on:
+  push:
+    # Only run this workflow on tags matching 'v*'
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: release
+    # Required for PyPI Trusted Publisher: we must allow GH to request the OIDC token
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Build the distribution
+        run: |
+          pip install --upgrade pip
+          pip install build
+          python -m build
+
+      - name: Publish to PyPI (Trusted Publisher)
+        uses: pypa/gh-action-pypi-publish@release/v1
