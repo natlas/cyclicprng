@@ -1,7 +1,4 @@
 [dev-packages]
-black = "==19.10b0"
-flake8 = "*"
-pre-commit = "*"
 pytest = "*"
 setuptools = "*"
 twine = "*"
