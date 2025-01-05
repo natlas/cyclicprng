@@ -1,19 +1,19 @@
-[[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
-
 [dev-packages]
-flake8 = "*"
 black = "==19.10b0"
+flake8 = "*"
+pre-commit = "*"
 pytest = "*"
+setuptools = "*"
 twine = "*"
 wheel = "*"
-setuptools = "*"
-pre-commit = "*"
 
 [packages]
 sympy = "*"
 
 [requires]
 python_version = "3.8"
+
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true

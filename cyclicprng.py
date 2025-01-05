@@ -1,8 +1,9 @@
-from threading import Lock
 import random
-import sympy
 from datetime import datetime
+from threading import Lock
+from typing import Optional
 
+import sympy
 
 mutex = Lock()
 
@@ -22,33 +23,45 @@ def modexp(b, e, m):
 
 class CyclicPRNG:
     """
-        For more information about the existence of this class and why it does what it does,
-        see https://github.com/natlas/natlas/wiki/Host-Coverage-Scanning-Strategy
-        Edge case behavior:
-            size < 1 -> Raise ValueError
-            size = 1 -> Always return 1
-            size = 2 -> The generator is always 2 (equivalent to consistent=true)
+    For more information about the existence of this class and why it does what it does,
+    see https://github.com/natlas/natlas/wiki/Host-Coverage-Scanning-Strategy
+    Edge case behavior:
+        size < 1 -> Raise ValueError
+        size = 1 -> Always return 1
+        size = 2 -> The generator is always 2 (equivalent to consistent=true)
     """
 
-    size = 0
-    modulus = 0
-    modulus_factors = {}
-    generator = 0
-    start = 0
-    end = 0
-    current = 0
-    cycle_start_time = None
-    completed_cycle_count = 0
-    consistent = False
-    
+    size: int
+    modulus: int
+    modulus_factors: dict
+    generator: int
+    start: int
+    end: int
+    current: int
+    cycle_start_time: datetime
+    completed_cycle_count: int
+    consistent: bool
 
     def __init__(
-        self, cycle_size: int, consistent: bool = False, event_handler: callable = None
+        self,
+        cycle_size: int,
+        consistent: bool = False,
+        event_handler: Optional[callable] = None,
     ):
         """
-            Initialize PRNG that restarts after cycle_size calls
+        Initialize PRNG that restarts after cycle_size calls
         """
         self.notify = []
+        self.modulus = 0
+        self.modulus_factors: dict
+        self.generator = 0
+        self.start = 0
+        self.end = 0
+        self.current = 0
+        self.cycle_start_time = None
+        self.completed_cycle_count = 0
+        self.consistent = False
+        self.modulus_factors = {}
         self.size = cycle_size
         if self.size < 1:
             raise ValueError(
@@ -66,8 +79,8 @@ class CyclicPRNG:
 
     def register_event_handler(self, func: callable):
         """
-            A simple event handler to be notified of events in the cyclic PRNG
-            func must be a callable that takes a single parameter
+        A simple event handler to be notified of events in the cyclic PRNG
+        func must be a callable that takes a single parameter
         """
         if not callable(func):
             raise TypeError("Event handler must be callable")
@@ -75,14 +88,14 @@ class CyclicPRNG:
 
     def unregister_event_handler(self, func: callable):
         """
-            Removes an event handler from the cyclic PRNG
+        Removes an event handler from the cyclic PRNG
         """
         if func in self.notify:
             self.notify.remove(func)
 
     def clear_event_handlers(self):
         """
-            Clear all event handlers from the cyclic PRNG
+        Clear all event handlers from the cyclic PRNG
         """
         self.notify.clear()
 
@@ -102,7 +115,7 @@ class CyclicPRNG:
 
     def _init_generator(self):
         """
-            Find a generator for the whole cyclic group.
+        Find a generator for the whole cyclic group.
         """
         found = False
         base = 0
@@ -123,7 +136,7 @@ class CyclicPRNG:
 
     def _cycle_until_in_range(self, element):
         """
-            Cycle the element until it is self.size or less
+        Cycle the element until it is self.size or less
         """
         while element > self.size:
             element = (element * self.generator) % self.modulus
@@ -131,7 +144,7 @@ class CyclicPRNG:
 
     def _init_permutation(self):
         """
-            Create a new permutation of the scope
+        Create a new permutation of the scope
         """
         exp = random.randint(2, self.modulus - 1)
         self.end = self._cycle_until_in_range(modexp(self.generator, exp, self.modulus))
@@ -142,7 +155,7 @@ class CyclicPRNG:
 
     def _restart_cycle(self):
         """
-            Restart PRNG Cycle
+        Restart PRNG Cycle
         """
         if self.consistent:
             self.current = self.start
@@ -155,7 +168,7 @@ class CyclicPRNG:
 
     def get_random(self):
         """
-            Gets the next random number from the permutation
+        Gets the next random number from the permutation
         """
         if self.size <= 1:
             return 1
